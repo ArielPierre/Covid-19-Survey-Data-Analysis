@@ -1,0 +1,46 @@
+#Load Packages 
+#=========================
+library(tidyverse)
+library(readxl)
+#Import Data set 
+#=======================================
+HHS_COVID_SURVEY <- read_excel("file/path/to/HHS_COVID_SURVEY.xlsx")
+#Replacing skipped or refused answers with NA
+#=======================================
+HHS_COVID_SURVEY[HHS_COVID_SURVEY == -99] <- NA 
+HHS_COVID_SURVEY[HHS_COVID_SURVEY == -100] <- NA
+#Isolating columns wanted for visualization 
+#==========================
+agecategories <- select(HHS_COVID_SURVEY, agecat)
+gender <- select(HHS_COVID_SURVEY, ppgender)
+race_cat <- select(HHS_COVID_SURVEY,race)
+#Switching variables from numerical to categorical 
+#==================================
+gender <- mutate(gender,ppgender = factor(ppgender, levels = c(1, 2), labels = c("Male", "Female")))
+agecategories <- mutate(agecategories, agecat = factor(agecat, levels = c(2,3,4,5), labels = c("18 - 24", "25-44", "45-64", "64+")))
+race_cat <- mutate(race_cat, race = factor(race, levels = c(1,2,3,4,5,6,7), labels = c("Refusal","White*","Black*","AAPI*","Hispanic**","AIAN","Multiracial***")))
+#Data Visualization
+#=========================================
+race_viz <- ggplot(race_cat, aes(x = race, fill = factor(race))) + geom_bar() + labs(title = "Respondent Race", y = "Amount", x = " Race", caption = "* Non Hispanic, **excluding American Indigenous and Alaskan Natives(AIAN), *** Non Hispanic, Non AIAN") + scale_fill_discrete(palette = "Pastel2") + guides(fill = guide_legend(title = "Respondent Races"))
+gender_viz <- ggplot(gender, aes(x = ppgender, fill = factor(ppgender))) + geom_bar() + labs(title = "Respondent Gender", y = "Amount", x = "Gender") + scale_fill_discrete(palette = "Pastel2") + guides(fill = guide_legend(title = "Gender Labels"))
+age_viz <- ggplot(agecategories, aes(x = agecat, fill = factor(agecat))) + geom_bar() + labs(title = "Respondent Ages by Category", y = "Amount", x = "Age Categories") + scale_fill_discrete(palette = "Pastel2") + guides(fill = guide_legend(title = "Age Categories"))
+#==========================================
+#Print Graphs 
+age_viz
+race_viz
+gender_viz 
+#======
+#Changing answers reflecting 2 Covid-19 vaccinations to reflect the same as 1 vaccination, for analysis purposes
+#================================================
+HHS_COVID_SURVEY$CAM5_VaccUptake[HHS_COVID_SURVEY$CAM5_VaccUptake == 2] <- 1 
+#Running correlations 
+#========================
+age_vacc_cortest_results <- cor.test(HHS_COVID_SURVEY$CAM5_VaccUptake, HHS_COVID_SURVEY$agecat, na.action = na.omit)
+income_vacc_cortest_results <- cor.test(HHS_COVID_SURVEY$CAM5_VaccUptake, HHS_COVID_SURVEY$income, na.action = na.omit)
+youngchild_to_nervous_cortest <- cor.test(HHS_COVID_SURVEY$Child_Age_04, HHS_COVID_SURVEY$CV12_1_Nervous, na.action = na.omit)
+#====
+#Printing correlation test results 
+age_vacc_cortest_results
+income_vacc_cortest_results
+youngchild_to_nervous_cortest 
+
