@@ -54,4 +54,4 @@ than numerical values, meaning this result should be taken with caution.
 
 ### Respondent Race
 
-![Respondent Race](Race_viz.png) 
+![Respondent Race](Race__viz.png) 
