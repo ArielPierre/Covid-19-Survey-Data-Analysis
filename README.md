@@ -46,12 +46,12 @@ than numerical values, meaning this result should be taken with caution.
 
 ### Respondent Gender
 
-![Respondent Gender](figures/gender_viz.png)
+![Respondent Gender](gender_viz.png)
 
 ### Respondent Age Categories
 
-![Respondent Age Categories](figures/age_viz.png)
+![Respondent Age Categories](age_viz.png)
 
 ### Respondent Race
 
-![Respondent Race](figures/Race_viz.png) 
+![Respondent Race](Race_viz.png) 
