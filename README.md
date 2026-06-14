@@ -15,7 +15,7 @@ Data were obtained from https://healthdata.gov/Health/HHS-COVID-19-Monthly-Outco
 - Correlation analysis using Base R functions 
 
 ## Files
-- covid_data_visualization.R : Main analysis script
+- COVID_19_Data_Analysis.R : Main analysis script
 - figures/ : Generated visualizations
 
 ## Key Findings
